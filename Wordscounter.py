@@ -5,15 +5,13 @@ import os
 os.chdir(os.getcwd())
 
 with open('lorem.ipsum.txt') as f:
-    contents = f.readlines()
-    text = " ".join(contents).lower()
+    contents = f.read().lower()
 
 def wordcounter(text: str):
-    words = re.split(pattern = r'[\W]+|[\d]',
+    words = re.findall(pattern = r'[a-ząćęłńóśźż]+',
     string = text)
-    fullword = list(filter(lambda x: x!='' , words))
     d = {}
-    for element in fullword:
+    for element in words:
         if element in d:
             d[element] += 1
         else:
@@ -21,6 +19,6 @@ def wordcounter(text: str):
     df = pd.DataFrame(d.items(),columns=['Słowo','Występowanie'])
     df.to_excel('licz_słowa.xlsx')
     return df   
-print(wordcounter(text))
+print(wordcounter(contents))
 
 
